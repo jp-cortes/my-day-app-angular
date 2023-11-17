@@ -15,4 +15,29 @@ export class LabsComponent {
     'Todo 2',
     'Todo 3',
   ]
+  name = 'Jhonny';
+  age = 20;
+  disabled = true;
+  person = {
+    avatar: 'https://w3schools.com/howto/img_avatar.png',
+    alt: 'avatar',
+    name: 'Jhonny',
+    age: 20
+  }
+  clickHandler() {
+    alert('single click');
+  }
+
+  doubleClickHandler() {
+    alert('double click');
+  }
+
+
+  newAge = '';
+
+  changeHandler(event: Event) {
+    const elementInput = event.target as HTMLInputElement
+    this.newAge = elementInput.value;
+
+  }
 }

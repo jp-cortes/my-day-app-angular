@@ -1,7 +1,26 @@
-<h1>Vamo allaaaaaa</h1>
+<div class="container">
+  <h1>Vamo allaaaaaa</h1>
 <h2>{{ moto }}</h2>
 <ul>
   <li *ngFor="let elements of task">
     {{ elements }}
   </li>
 </ul>
+<hr />
+<h2>{{ 'Hello'.repeat(4) }}</h2>
+<p>The sum of 1 + 1 is {{ 1 + 1 }}</p>
+<p>H i my name is {{ name }} and I'm {{ age }}</p>
+<hr />
+<img [src]="person.avatar" [alt]="person.alt"/>
+<br />
+<input type="number" [value]="person.age" />
+<button [disabled]="disabled">Click me</button>
+<p>Person: {{ person.name }}</p>
+<hr />
+<button (click)="clickHandler()">function clickHandler </button>
+<hr />
+<button (dblclick)="doubleClickHandler()">function doubleClickHandler </button>
+<hr />
+<input type="number" (change)="changeHandler($event)"/>
+<p>changeHandler function output  {{ newAge }}</p>
+</div>
