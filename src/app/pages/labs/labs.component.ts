@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -33,11 +33,11 @@ export class LabsComponent {
   }
 
 
-  newAge = '';
+  newAge = signal('');
 
   changeHandler(event: Event) {
     const elementInput = event.target as HTMLInputElement
-    this.newAge = elementInput.value;
+    this.newAge.set(elementInput.value);
 
   }
 

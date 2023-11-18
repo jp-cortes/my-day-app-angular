@@ -22,9 +22,11 @@
 <button (dblclick)="doubleClickHandler()">function doubleClickHandler </button>
 <hr />
 <input type="number" (change)="changeHandler($event)"/>
-<p>changeHandler function output  {{ newAge }}</p>
+<p>changeHandler function output with signal {{ newAge() }}</p>
+
 <p>keyupHandler function output check console  </p>
 <input type="text" (keyup)="keyupHandler($event)"/>
+
 <p>keyupHandler function output with key combinations </p>
 <input type="text" (keyup.shift.k)="keyupHandler($event)"/>
 </div>
