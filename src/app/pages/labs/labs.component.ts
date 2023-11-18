@@ -40,4 +40,10 @@ export class LabsComponent {
     this.newAge = elementInput.value;
 
   }
+
+  keyupHandler(event: Event) {
+    const elementInput = event.target as HTMLInputElement
+    console.log(elementInput.value);
+
+  }
 }
