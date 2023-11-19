@@ -10,11 +10,11 @@ import { CommonModule } from '@angular/common';
 })
 export class LabsComponent {
   moto = 'I get around';
-  task = [
+  todos = [
     'Todo 1',
     'Todo 2',
     'Todo 3',
-  ]
+  ];
   name = 'Jhonny';
   age = 20;
   disabled = true;
@@ -34,10 +34,21 @@ export class LabsComponent {
 
 
   newAge = signal('');
+  tasks = signal([
+    'Todo 1',
+    'Todo 2',
+    'Todo 3',
+  ]);
 
   changeHandler(event: Event) {
     const elementInput = event.target as HTMLInputElement
     this.newAge.set(elementInput.value);
+
+  }
+  addTask(event: Event) {
+    const elementInput = event.target as HTMLInputElement;
+    const newTask = elementInput.value;
+    this.tasks.update((tasks) => [...tasks, newTask]);
 
   }
 
@@ -46,4 +57,7 @@ export class LabsComponent {
     console.log(elementInput.value);
 
   }
+
+
+
 }
