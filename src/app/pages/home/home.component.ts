@@ -18,7 +18,7 @@ export class HomeComponent {
    },
   ]);
 
-_getTask() {
+getTask() {
   return this.tasks()
 }
   changeHandler(event: Event) {
@@ -40,7 +40,7 @@ _getTask() {
     this.tasks.update((tasks) => tasks.map((task) =>
     task.id === id ? { ...task, completed: !task.completed } : task)
     )
-    console.log(this._getTask())
+    console.log(this.getTask())
   }
 
   deleteTask(index: number) {
