@@ -8,7 +8,7 @@
         placeholder="Type new todo"
         autofocus
         type="text"
-        (change)="addTask($event)"
+        (change)="changeHandler($event)"
         required
       />
     </div>
@@ -19,8 +19,8 @@
       <ul class="todo-list">
         <li *ngFor="let task of tasks(); index as i">
           <div class="view">
-            <input class="toggle"  type="checkbox" />
-            <label>{{ task }}</label>
+            <input class="toggle" [checked]="task.completed" (click)="markCompleted(task.id)" type="checkbox" />
+            <label>{{ task.title }}</label>
             <button class="destroy" (click)="deleteTask(i)"></button>
           </div>
           <input class="edit"  value="Buy a unicorn" />
