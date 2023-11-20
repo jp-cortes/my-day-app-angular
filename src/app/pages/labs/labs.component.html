@@ -11,11 +11,11 @@
 <p>The sum of 1 + 1 is {{ 1 + 1 }}</p>
 <p>H i my name is {{ name }} and I'm {{ age }}</p>
 <hr />
-<img [src]="person.avatar" [alt]="person.alt"/>
+<img [src]="person().avatar" [alt]="person().alt"/>
 <br />
-<input type="number" [value]="person.age" />
+<input type="number" [value]="person().age" />
 <button [disabled]="disabled">Click me</button>
-<p>Person: {{ person.name }}</p>
+<p>Person: {{ person().name }}</p>
 <hr />
 <button (click)="clickHandler()">function clickHandler </button>
 <hr />
@@ -34,9 +34,31 @@
 
 <input type="text" (change)="addTask($event)"/>
 <p>addTask function output with signal </p>
+<pre>
+  <code>
+    {{ tasks() | json}}
+  </code>
+</pre>
 <ul>
   <li *ngFor="let elements of tasks(); index as i">
    {{ i + 1 }} {{ elements }}
   </li>
 </ul>
+<hr />
+<div *ngIf="1 !== 1">
+  My content
+</div>
+<!-- ngIf i just a conditional -->
+<div *ngIf="person().name === 'jhonny'">
+  My name is Jhonny
+</div>
+<hr />
+<input type="number" (change)="changeAge($event)"/>
+<div *ngIf="person().name === 'Jhonny' && person().age >= 20; else elseBlock">
+  My name is Jhonny and I'm in my twenties
+</div>
+<ng-template #elseBlock>
+  My name is Jhonny and I'm under age
+</ng-template>
+
 </div>
