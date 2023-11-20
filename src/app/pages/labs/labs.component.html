@@ -60,5 +60,13 @@
 <ng-template #elseBlock>
   My name is Jhonny and I'm under age
 </ng-template>
-
+<hr />
+<input type="text" (change)="changeName($event)"/>
+<div [ngSwitch]="person().name">
+  <p *ngSwitchCase="'Jhonny'">I'm Jhonny</p>
+  <p *ngSwitchCase="'Charlie'">I'm Charlie</p>
+  <p *ngSwitchCase="'Joseph'">I'm Joseph</p>
+  <p *ngSwitchCase="'Alan'">I'm Alan</p>
+  <p *ngSwitchDefault="'Alan'">I'm nobody</p>
+</div>
 </div>
