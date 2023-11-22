@@ -33,16 +33,18 @@ getTask() {
   changeHandler() {
 
 if(this.newTaskCtrl.valid) {
-  const value = this.newTaskCtrl.value;
-  this.addTask(value);
-  this.newTaskCtrl.setValue('');
+  const value = this.newTaskCtrl.value.trim();
+  if(value !== '') {
+    this.addTask(value);
+    this.newTaskCtrl.setValue('');
+  }
 }
 
   }
   addTask(title: string) {
     const newTask = {
       id: Date.now(),
-      title: title.trim(),
+      title,
       completed: false
     }
     this.tasks.update((tasks) => [...tasks, newTask]);
@@ -57,5 +59,8 @@ if(this.newTaskCtrl.valid) {
 
   deleteTask(index: number) {
     this.tasks.update((tasks) => tasks.filter((task, position) => position !== index))
+  }
+  clearCompletedTask() {
+    this.tasks.update((tasks) => tasks.filter((task) => task.completed === false))
   }
 }
