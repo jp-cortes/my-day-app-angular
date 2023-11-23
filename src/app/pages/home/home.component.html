@@ -19,13 +19,17 @@
 
     <section class="main" *ngIf="tasks().length">
       <ul class="todo-list">
-        <li *ngFor="let task of tasks(); index as i " [class.completed]="task.completed">
+        <li
+        *ngFor="let task of tasks(); index as i"
+        (dblclick)="updateTask(task.id)"
+        [class.editing]="task.editing"
+        [class.completed]="task.completed">
           <div class="view">
             <input class="toggle" [checked]="task.completed" (click)="markCompleted(task.id)" type="checkbox" />
             <label>{{ task.title }}</label>
             <button class="destroy" (click)="deleteTask(i)"></button>
           </div>
-          <input class="edit"  value="Buy a unicorn" />
+          <input class="edit" (keydown.enter)="updateTaskHandler(task.id, $event)"  [value]="task.title" />
         </li>
         <!-- <li class="completed">
           <div class="view">
