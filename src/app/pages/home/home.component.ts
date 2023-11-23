@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, Injector, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,21 +12,49 @@ import { ThisReceiver } from '@angular/compiler';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Learn Angular',
-      completed: false,
-    },
-  ]);
+
+  tasks = signal<Task[]>([]);
+
+  filter = signal<'all' | 'pending' | 'completed'>('all');
+
+  tasksByFilter = computed(() => {
+    // computed is use to handle multiple signals
+    const filter = this.filter();
+    const tasks = this.tasks();
+    if(filter === 'pending') {
+      return tasks.filter(task => !task.completed)
+    }
+    else if(filter === 'completed') {
+      return tasks.filter(task => task.completed)
+    }
+    return tasks;
+  });
 
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required],
   });
 
-  getTask() {
-    return this.tasks();
+  injector = inject(Injector);
+
+    ngOnInit() {
+      const storage = localStorage.getItem('TASKS_ANGULAR_V1')
+      if(storage) {
+        const tasks = JSON.parse(storage); // make the string an array of object again
+        this.tasks.set(tasks);
+      }
+      this.trackTask();
+    }
+
+  trackTask() {
+    effect(() => {
+      const tasks = this.tasks();
+      localStorage.setItem('TASKS_ANGULAR_V1', JSON.stringify(tasks)); //make the storage a string
+    },
+    {
+      injector: this.injector
+    } // this option is added if the  effect is called out of a constructor
+    );
   }
 
   changeHandler() {
@@ -102,6 +130,11 @@ export class HomeComponent {
       tasks.filter((task, position) => position !== index)
     );
   }
+
+  changeFilter(filter: 'all' | 'pending' | 'completed') {
+    this.filter.set(filter);
+  }
+
   clearCompletedTask() {
     this.tasks.update((tasks) =>
       tasks.filter((task) => task.completed === false)
