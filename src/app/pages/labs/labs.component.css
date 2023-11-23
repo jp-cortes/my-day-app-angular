@@ -6,3 +6,12 @@
   height: 100px;
   background-color: red;
 }
+.error-msg {
+  background-color: rebeccapurple;
+  color: whitesmoke;
+  opacity: 0;
+  transition: all linear 0.5s;
+}
+.show {
+  opacity: 1;
+}

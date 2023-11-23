@@ -19,7 +19,7 @@
 
     <section class="main" *ngIf="tasks().length">
       <ul class="todo-list">
-        <li *ngFor="let task of tasks(); index as i">
+        <li *ngFor="let task of tasks(); index as i " [class.completed]="task.completed">
           <div class="view">
             <input class="toggle" [checked]="task.completed" (click)="markCompleted(task.id)" type="checkbox" />
             <label>{{ task.title }}</label>

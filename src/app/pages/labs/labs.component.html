@@ -81,4 +81,11 @@
 <hr />
 <input type="number" [formControl]="widthCtrl" />
 <div class="box" [style.width.px]="widthCtrl.value"></div>
+<hr />
+<div>
+<input type="text" [formControl]="nameCtrl" /> <br />
+<span class="error-msg" [class.show]="nameCtrl.invalid && nameCtrl.touched">
+invalid Name
+</span>
+</div>
 </div>
