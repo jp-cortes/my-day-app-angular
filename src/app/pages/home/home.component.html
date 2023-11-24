@@ -9,7 +9,7 @@
         autofocus
         type="text"
         required
-        [formControl]=" newTaskCtrl"
+        [formControl]="newTaskCtrl"
         (keydown.enter)="changeHandler()"
       />
     </div>
@@ -27,44 +27,20 @@
           <div class="view">
             <input class="toggle" [checked]="task.completed" (click)="markCompleted(task.id)" type="checkbox" />
             <label>{{ task.title }}</label>
-            <button class="destroy" (click)="deleteTask(i)"></button>
+            <button class="destroy" (click)="deleteTask(task.id)"></button>
           </div>
           <input class="edit" (keydown.enter)="updateTaskHandler(task.id, $event)"  [value]="task.title" />
         </li>
-        <!-- <li class="completed">
-          <div class="view">
-            <input class="toggle" type="checkbox" checked />
-            <label>Learn JavaScript</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Learn JavaScript" />
-        </li>
-        <li>
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Buy a unicorn</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Buy a unicorn" />
-        </li>
-        <li class="editing">
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Make dishes</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Make dishes" />
-        </li> -->
       </ul>
     </section>
     <!-- This footer should be hidden by default and shown when there are todos -->
     <footer class="footer" *ngIf="tasks().length">
-      <!-- This should be `0 items left` by default -->
+      <!-- This should be hidden by default when there is no task -->
       <span class="todo-count" *ngIf="tasks().length">
         <strong>{{ tasksByFilter().length }}</strong>
         {{ tasksByFilter().length === 1 ? 'item' : 'items' }}
       </span>
-      <!-- Remove this if you don't implement routing -->
+      <!-- the state(signal) is handle by computed -->
       <ul class="filters">
         <li>
           <a (click)="changeFilter('all')" [class.selected]="filter() === 'all'">All</a>

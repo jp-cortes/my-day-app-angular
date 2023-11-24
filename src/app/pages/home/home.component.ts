@@ -13,30 +13,38 @@ import { ThisReceiver } from '@angular/compiler';
 })
 export class HomeComponent {
 
-  tasks = signal<Task[]>([]);
+  tasks = signal<Task[]>([]); // initial array of task
 
+  // filter the task
   filter = signal<'all' | 'pending' | 'completed'>('all');
 
   tasksByFilter = computed(() => {
-    // computed is use to handle multiple signals
-    const filter = this.filter();
-    const tasks = this.tasks();
+    // computed create a new signal based on another signals
+    const filter = this.filter(); // 'all' | 'pending' | 'completed'
+    const tasks = this.tasks(); // Task[]
+    // filter by pending task
     if(filter === 'pending') {
       return tasks.filter(task => !task.completed)
     }
+    // filter by completed task
     else if(filter === 'completed') {
       return tasks.filter(task => task.completed)
     }
+    // return al the task by default
     return tasks;
   });
 
+  // control the input of new task
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
-    validators: [Validators.required],
+    validators: [
+      Validators.required,
+    ],
   });
 
   injector = inject(Injector);
 
+  // the initial state of the tasks
     ngOnInit() {
       const storage = localStorage.getItem('TASKS_ANGULAR_V1')
       if(storage) {
@@ -48,15 +56,20 @@ export class HomeComponent {
 
   trackTask() {
     effect(() => {
+      // effect vigilates everytime a state(signal) change
+      // and allow to execute a logic based on that or those changes
+      // usually is used inside a contructor
+      // it's executed everytime thre is a change on the state(signal) place inside
       const tasks = this.tasks();
       localStorage.setItem('TASKS_ANGULAR_V1', JSON.stringify(tasks)); //make the storage a string
     },
     {
-      injector: this.injector
+      injector: this.injector,
     } // this option is added if the  effect is called out of a constructor
     );
   }
 
+  // handle edit the new task with the double click
   changeHandler() {
     if (this.newTaskCtrl.valid) {
       const value = this.newTaskCtrl.value.trim();
@@ -67,16 +80,19 @@ export class HomeComponent {
     }
   }
 
+  // schema to create a new task
+  // check folder /models for types
   addTask(title: string) {
     const newTask = {
-      id: Date.now(),
+      id: crypto.randomUUID(),
       title,
       completed: false,
     };
     this.tasks.update((tasks) => [...tasks, newTask]);
   }
 
-  markCompleted(id: number) {
+  // mark task as completed
+  markCompleted(id: string) {
     this.tasks.update((tasks) =>
       tasks.map((task) => {
         if (task.id === id) {
@@ -90,7 +106,8 @@ export class HomeComponent {
     );
   }
 
-  updateTask(id: number) {
+  // update task
+  updateTask(id: string) {
     this.tasks.update((tasks) =>
       tasks.map((task) => {
         if (task.id === id) {
@@ -107,7 +124,7 @@ export class HomeComponent {
     );
   }
 
-  updateTaskHandler(id: number, event: Event) {
+  updateTaskHandler(id: string, event: Event) {
     const input = event.target as HTMLInputElement;
     this.tasks.update((tasks) =>
       tasks.map((task) => {
@@ -125,9 +142,9 @@ export class HomeComponent {
   }
 
 
-  deleteTask(index: number) {
+  deleteTask(id: string) {
     this.tasks.update((tasks) =>
-      tasks.filter((task, position) => position !== index)
+      tasks.filter((task) => task.id !== id)
     );
   }
 
