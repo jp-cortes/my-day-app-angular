@@ -39,16 +39,11 @@
     {{ tasks() | json}}
   </code>
 </pre>
-<ul>
-  <li *ngFor="let elements of tasks(); index as i">
-   {{ i + 1 }} {{ elements }}
-  </li>
-</ul>
 <hr />
 <div *ngIf="1 !== 1">
   My content
 </div>
-<!-- ngIf i just a conditional -->
+<!-- ngIf is just a conditional -->
 <div *ngIf="person().name === 'jhonny'">
   My name is Jhonny
 </div>
@@ -60,7 +55,18 @@
 <ng-template #elseBlock>
   My name is Jhonny and I'm under age
 </ng-template>
+
 <hr />
+<!-- new syntax -->
+<h2>New if</h2>
+@if(person().name === 'Jhonny' && person().age >= 20) {
+  <div>My name is Jhonny and I'm in my twenties</div>
+} @else {
+  <div>My name is Jhonny and I'm in my twenties</div>
+}
+
+<hr />
+<h2>Old switch</h2>
 <input type="text" (change)="changeName($event)"/>
 <div [ngSwitch]="person().name">
   <p *ngSwitchCase="'Jhonny'">I'm Jhonny</p>
@@ -69,6 +75,26 @@
   <p *ngSwitchCase="'Alan'">I'm Alan</p>
   <p *ngSwitchDefault="'Alan'">I'm nobody</p>
 </div>
+<hr />
+<h2>New switch</h2>
+<input type="text" (change)="changeName($event)"/>
+@switch (person().name) {
+  @case('Jhonny') {
+    <p>I'm Jhonny</p>
+  }
+  @case('Charlie') {
+    <p>I'm Charlie</p>
+  }
+  @case('Joseph') {
+    <p>I'm Joseph</p>
+  }
+  @case('Alan') {
+    <p>I'm Alan</p>
+  }
+  @default {
+    <p>I'm nobody</p>
+  }
+}
 <hr />
 <input type="color" [formControl]="colorCtrl" />
 <p>Color: {{ colorCtrl.value }}</p>
@@ -88,4 +114,22 @@
 invalid Name
 </span>
 </div>
+<hr />
+<h2>Old syntax *ngFor</h2>
+<ul>
+  <li *ngFor="let elements of tasks(); index as i">
+   {{ i + 1 }} {{ elements }}
+  </li>
+</ul>
+<h2>New syntax for</h2>
+<ul>
+  @for( elements of tasks(); track elements; let i = $index)
+  {
+    <li>
+   {{ i + 1 }} {{ elements }}
+  </li>
+} @empty{
+  <li><i>Thelist is empty</i></li>
+}
+</ul>
 </div>
