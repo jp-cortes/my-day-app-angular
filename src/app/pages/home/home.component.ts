@@ -30,7 +30,7 @@ export class HomeComponent {
     else if(filter === 'completed') {
       return tasks.filter(task => task.completed)
     }
-    // return al the task by default
+    // return all the task by default
     return tasks;
   });
 
@@ -56,10 +56,10 @@ export class HomeComponent {
 
   trackTask() {
     effect(() => {
-      // effect vigilates everytime a state(signal) change
+      // effect vigilante's every time a state(signal) change
       // and allow to execute a logic based on that or those changes
-      // usually is used inside a contructor
-      // it's executed everytime thre is a change on the state(signal) place inside
+      // usually is used inside a constructor
+      // it's executed every time thre is a change on the state(signal) place inside
       const tasks = this.tasks();
       localStorage.setItem('TASKS_ANGULAR_V1', JSON.stringify(tasks)); //make the storage a string
     },
